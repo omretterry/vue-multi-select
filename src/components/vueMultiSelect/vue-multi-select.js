@@ -7,6 +7,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    placeholder: {
+      type: String,
+      default: '请选择',
+    },
     filters: {
       type: Array,
       default: () => [],
@@ -37,7 +41,7 @@ export default {
     },
     btnLabel: {
       type: Function,
-      default: () => ('multi-select'),
+      default: () => (''),
     },
     search: {
       type: Boolean,
@@ -115,7 +119,7 @@ export default {
         (option) => (option[this.labelSelected]
           ? {
             'font-weight': 'bold',
-            color: '#5755d9',
+            color: '#1890ff',
           } : ''));
       this.init();
     },
@@ -140,6 +144,7 @@ export default {
         this.globalModel = clone;
       }
       this.initValues();
+      console.log(this.globalModel);
     },
     initValues() {
       this.valueSelected = [];
@@ -288,6 +293,28 @@ export default {
       this.$emit('input', this.valueSelected.slice(0));
       this.$emit(this.eventName, this.valueSelected.slice(0));
       option.selectAll = !option.selectAll;
+      this.filter();
+    },
+    selectAllBtn(type) {
+      const isAll = type !== 'select';
+      this.previousSelected.push(this.cloneData(this.valueSelected));
+      for (let i = 0; i < this.globalModel[this.idSelectedTab][this.list].length;
+        i += 1) {
+        if (this.globalModel[this.idSelectedTab][this.list][i].visible
+          && !this.globalModel[this.idSelectedTab][this.list][i][this.labelDisabled]) {
+          if (!isAll) {
+            if (!this.globalModel[this.idSelectedTab][this.list][i][this.labelSelected]) {
+              this.globalModel[this.idSelectedTab][this.list][i][this.labelSelected] = true;
+              this.pushOption(this.globalModel[this.idSelectedTab][this.list][i]);
+            }
+          } else if (this.globalModel[this.idSelectedTab][this.list][i][this.labelSelected]) {
+            this.globalModel[this.idSelectedTab][this.list][i][this.labelSelected] = false;
+            this.popOption(this.globalModel[this.idSelectedTab][this.list][i]);
+          }
+        }
+      }
+      this.$emit('input', this.valueSelected.slice(0));
+      this.$emit(this.eventName, this.valueSelected.slice(0));
       this.filter();
     },
     filter() {

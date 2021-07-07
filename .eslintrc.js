@@ -8,8 +8,8 @@ module.exports = {
     '@vue/airbnb',
   ],
   rules: {
-    'max-len': ["error", { "code": 250 }],
-    'no-bitwise': [2, { allow: ["~"] }],
+    'max-len': ['error', { code: 250 }],
+    'no-bitwise': [2, { allow: ['~'] }],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },

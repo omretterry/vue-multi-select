@@ -1,81 +1,67 @@
 <template>
-<div class="select">
-  <button
-    ref="buttonClick"
-    type="button"
-    :class="`btn-select ${btnClass}`"
-    :disabled="disabled"
-    @click="toggleCheckboxes">
-    <div class="buttonLabel">
-      <span v-html="getBtnLabel"></span>
-      <span class="caret"></span>
+  <div class="select">
+    <div ref="buttonClick" type="button" :class="`btn-select ${btnClass}`" :disabled="disabled"
+      @click="toggleCheckboxes">
+      <el-input class="buttonLabel" readonly :value="getBtnLabel" :placeholder="placeholder"
+        suffix-icon="el-icon-arrow-down">
+      </el-input>
     </div>
-  </button>
-  <div
-    class="checkboxLayer"
-    :class="`${isOpen ? 'show' : ''} ${popoverClass}`"
-    v-click-outside="externalClick"
-    :style="getPosition">
-    <div class="helperContainer">
-      <div class="line">
-        <button
+    <div class="checkboxLayer" :class="`${isOpen ? 'show' : ''} ${popoverClass}`" v-click-outside="externalClick"
+      :style="getPosition">
+      <div class="helperContainer">
+        <div v-if="search" class="line" style="position:relative">
+          <input :placeholder="searchPlaceholder" :emptyTabText="emptyTabText" type="text" v-model="searchInput"
+            @input="searchfn()" class="inputFilter">
+          <!-- <button type="button" class="clearButton" @click="clearSearch()">×
+        </button> -->
+        </div>
+        <div class="line">
+          <button type="button" class="halfHelperButton" @click="selectAllBtn('select')">
+            Select All
+          </button>
+
+          <button type="button" class="halfHelperButton" @click="selectAllBtn('deselect')">
+            Deselect All
+          </button>
+          <!-- <button
           type="button" class="helperButton"
           @click="selectCurrent(button)"
           v-for="(button, index) in getButtonList"
           :key="index">
             {{button.selectAll ? button.nameNotAll : button.nameAll}}
-          </button>
-          <button v-if="historyButton && previousSelected.length"
-            @click="historyBack"
-            class="historyButton">
+          </button> -->
+
+          <button v-if="historyButton && previousSelected.length" @click="historyBack" class="historyButton">
             {{ historyButtonText }}
           </button>
+        </div>
       </div>
-      <div v-if="search" class="line" style="position:relative">
-        <input
-          :placeholder="searchPlaceholder"
-          :emptyTabText="emptyTabText"
-          type="text"
-          v-model="searchInput"
-          @input="searchfn()"
-          class="inputFilter">
-        <button type="button" class="clearButton" @click="clearSearch()">×
-          </button>
-      </div>
-    </div>
-    <div v-if="groups === true">
+      <div v-if="groups === true">
 
-      <ul class="tab tab-block">
-        <li class="tab-item"
-          v-for="(tab, index) in globalModel"
-          :key="index"
-          v-show="tab[list].length"
-          @click="selectTab(index)" :class="{active : idSelectedTab == index}">
-          <span class="pointer">{{tab[groupName]}}</span>
-        </li>
-      </ul>
-    </div>
-    <div class="checkBoxContainer">
-      <ul class="selectList"
-        v-for="(tab, index) in globalModel"
-        v-show="idSelectedTab == index"
-        :key="index">
-        <li v-for="(option, indexOptions) in tab[list]"
-          :key="indexOptions"
-          :class="[option[labelDisabled] ? 'disabled' : '', 'selectItem']"
-          v-show="option.visible"
-          @click="selectOption(option)"
-          :style="cssSelected(option)">
-          <slot name="option" v-bind:option="option">
-            <span class="right margin-right-10" v-if="option[labelSelected]">✓</span>
-            <span class="margin-left-20">{{option[labelName]}}</span>
-          </slot>
-        </li>
-      </ul>
-      <div v-if="!valueSelected  || optionsAllHide" class="empty-tab">{{ emptyTabText }}</div>
+        <ul class="tab tab-block">
+          <li class="tab-item" v-for="(tab, index) in globalModel" :key="index" v-show="tab[list].length"
+            @click="selectTab(index)" :class="{active : idSelectedTab == index}">
+            <span class="pointer">{{tab[groupName]}}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="checkBoxContainer">
+        <ul class="selectList" v-for="(tab, index) in globalModel" v-show="idSelectedTab == index" :key="index">
+          <li v-for="(option, indexOptions) in tab[list]" :key="indexOptions"
+            :class="[option[labelDisabled] ? 'disabled' : '', 'selectItem']" v-show="option.visible"
+            @click="selectOption(option)" :style="cssSelected(option)">
+            <div name="option" v-bind:option="option">
+              <span class="right margin-right-10" v-if="option[labelSelected]">
+                <i class="el-icon-check"></i>
+              </span>
+              <span class="margin-left-20">{{option[labelName]}}</span>
+            </div>
+          </li>
+        </ul>
+        <div v-if="!valueSelected  || optionsAllHide" class="empty-tab">{{ emptyTabText }}</div>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script src="./vue-multi-select.js"></script>

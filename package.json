@@ -1,5 +1,5 @@
 {
-  "name": "vue-multi-select",
+  "name": "vue-multi-select-li",
   "version": "4.6.0",
   "description": "A multi/single select component made in vue",
   "author": "Valère Pique <pique.valere@gmx.fr>",
@@ -22,6 +22,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "element-ui": "^2.15.3",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -36,9 +37,9 @@
     "spectre.css": "^0.5.8",
     "vue-template-compiler": "^2.6.11"
   },
-  "homepage": "https://github.com/IneoO/vue-multi-select#readme",
+  "homepage": "https://github.com/omretterry/vue-multi-select#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/IneoO/vue-multi-select.git"
+    "url": "https://github.com/omretterry/vue-multi-select.git"
   }
 }

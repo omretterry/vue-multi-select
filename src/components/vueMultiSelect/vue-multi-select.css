@@ -39,6 +39,7 @@
   overflow: hidden;
   padding: 2px 0 4px 0;
   position: relative;
+  display: flex;
 }
 
 
@@ -152,6 +153,21 @@
   margin-right: 4px;
 }
 
+.select .halfHelperButton {
+  display: inline;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  height: 26px;
+  font-size: 13px;
+  border-radius: 2px;
+  color: #666;
+  background-color: #ffffff;
+  line-height: 1.6;
+  margin: 0 1px 8px 1px;
+  width: calc(50% - 7px);
+}
+
 .select .helperButton {
   display: inline;
   text-align: center;
@@ -164,6 +180,7 @@
   background-color: #ffffff;
   line-height: 1.6;
   margin: 0 0 8px 0;
+  width: calc(100% - 14px);
 }
 
 .select .historyButton {
